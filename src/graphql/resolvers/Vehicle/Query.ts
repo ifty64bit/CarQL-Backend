@@ -1,8 +1,8 @@
-import { Car, GraphQLContext } from "../../../util/types";
+import { Vehicle, GraphQLContext } from "../../../util/types";
 
 const queryResolver = {
     Query: {
-        cars: async (
+        vehicles: async (
             _: any,
             args: { skip?: number; take?: number },
             context: GraphQLContext,
@@ -11,14 +11,14 @@ const queryResolver = {
             const { prisma } = context;
             try {
                 const data = await prisma.$transaction([
-                    prisma.car.findMany({
+                    prisma.vehicle.findMany({
                         skip: args.skip || 0,
                         take: args.take || 10,
                         include: {
                             user: true,
                         },
                     }),
-                    prisma.car.count(),
+                    prisma.vehicle.count(),
                 ]);
 
                 return {
@@ -30,9 +30,9 @@ const queryResolver = {
                 return { cars: [], count: 0 };
             }
         },
-        filterdCars: async (
+        filterdVehicles: async (
             _: any,
-            args: Partial<Car>,
+            args: Partial<Vehicle>,
             context: GraphQLContext,
             info: any
         ) => {
@@ -65,12 +65,12 @@ const queryResolver = {
                 }
                 if (args.price) {
                     where["price"] = {
-                        lte: parseInt(args.price),
+                        lte: args.price,
                     };
                 }
                 if (args.mileage) {
                     where["mileage"] = {
-                        lte: parseInt(args.mileage),
+                        lte: args.mileage,
                     };
                 }
                 if (args.transmission) {
@@ -86,15 +86,14 @@ const queryResolver = {
                     };
                 }
                 const data = await prisma.$transaction([
-                    prisma.car.findMany({
+                    prisma.vehicle.findMany({
                         where,
                         include: {
                             user: true,
                         },
                     }),
-                    prisma.car.count({ where }),
+                    prisma.vehicle.count({ where }),
                 ]);
-                console.log(data);
 
                 return {
                     cars: data[0],
@@ -105,8 +104,28 @@ const queryResolver = {
                 return { cars: [], count: 0 };
             }
         },
-        car: async (_: any, args: any, context: GraphQLContext, info: any) => {
-            return {};
+        vehicle: async (
+            _: any,
+            args: { id: string },
+            context: GraphQLContext,
+            info: any
+        ) => {
+            const { prisma } = context;
+            try {
+                const data = await prisma.vehicle.update({
+                    where: { id: args.id },
+                    include: {
+                        user: true,
+                    },
+                    data: {
+                        views: { increment: 1 },
+                    }
+                });
+                return data;
+            } catch (error) {
+                console.error(error);
+                return null;
+            }
         },
     },
 };

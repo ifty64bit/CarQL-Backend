@@ -1,9 +1,9 @@
 import mutationResolvers from "./Mutation";
 import queryResolver from "./Query";
 
-const carResolver = {
+const vehicleResolver = {
     ...queryResolver,
     ...mutationResolvers
 };
 
-export default carResolver;
+export default vehicleResolver;
