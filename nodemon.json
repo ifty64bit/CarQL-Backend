@@ -1,0 +1,6 @@
+{
+    "watch": ["src"],
+    "ext": ".ts",
+    "ignore": [],
+    "exec": "node --trace-warnings --experimental-specifier-resolution=node --loader ts-node/esm src/index.ts"
+}
