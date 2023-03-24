@@ -22,7 +22,7 @@ const queryResolver = {
                 ]);
 
                 return {
-                    cars: data[0],
+                    Vehicles: data[0],
                     count: data[1],
                 };
             } catch (error) {
@@ -63,9 +63,9 @@ const queryResolver = {
                         mode: "insensitive",
                     };
                 }
-                if (args.price) {
+                if (args.hourly_rate) {
                     where["price"] = {
-                        lte: args.price,
+                        lte: args.hourly_rate,
                     };
                 }
                 if (args.mileage) {
@@ -119,7 +119,7 @@ const queryResolver = {
                     },
                     data: {
                         views: { increment: 1 },
-                    }
+                    },
                 });
                 return data;
             } catch (error) {

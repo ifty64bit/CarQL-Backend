@@ -28,13 +28,14 @@ union VehicleResponse = Vehicle | ErrorResponse
 
 type VehicleImage {
     url:String
-    alt:String
-    isPrimary:Boolean
+    name:String
+    originalName:String
 }
 
 input VehicleImageInput {
     url:String!
-    alt:String
+    name:String!
+    originalName:String!
     isPrimary:Boolean
 }
 
@@ -54,7 +55,7 @@ type Vehicle {
     model: String
     year: Int
     color: String
-    price: Int
+    hourly_rate: Int
     mileage: Int
     transmission: String
     engine: String

@@ -8,6 +8,7 @@ import dotenv from "dotenv";
 import typeDefs from "./graphql/typeDefs";
 import resolvers from "./graphql/resolvers";
 import { GraphQLContext } from "./util/types";
+import upload from "./util/multer";
 
 dotenv.config();
 const corsOptions = {
@@ -20,6 +21,9 @@ const prisma = new PrismaClient();
 
 //declare express instance
 const app = express();
+
+//declare public static folder
+app.use(express.static("public"));
 
 //declare apollo server instance
 const server = new ApolloServer({
@@ -34,6 +38,25 @@ try {
 } catch (error: any) {
     console.error(error.message);
 }
+
+app.post(
+    "/photos/upload",
+    upload.array("photos", 12),
+    function (req, res, next) {
+        // req.files is array of `photos` files
+        // req.body will contain the text fields, if there were any
+
+        return res.status(200).json({
+            message: "success",
+            fileNames: (req.files as Array<Express.Multer.File>).map(
+                (file) => ({
+                    name: file.filename,
+                    originalName: file.originalname,
+                })
+            ),
+        });
+    }
+);
 
 app.use(
     "/graphql",

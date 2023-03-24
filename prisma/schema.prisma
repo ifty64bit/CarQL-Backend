@@ -27,6 +27,12 @@ enum Role {
     USER
 }
 
+type Images {
+    url          String
+    name         String
+    originalName String
+}
+
 model Account {
     id                String  @id @default(auto()) @map("_id") @db.ObjectId
     userId            String  @db.ObjectId
@@ -83,6 +89,7 @@ model Vehicle {
     registration_number String
     availability        Boolean
     hourly_rate         Int
+    images              Images[]
     views               Int?        @default(0)
     tags                String[]
     userId              String      @db.ObjectId

@@ -52,6 +52,11 @@ const mutationResolvers = {
             }
             try {
                 const updatedVehicle: any = {};
+                // Object.keys(args).forEach((key) => {
+                //     if (key) {
+                //         updatedVehicle[key] = args[key];
+                //     }
+                // });
                 if (args.brand) {
                     updatedVehicle["brand"] = args.brand;
                 }
@@ -104,7 +109,7 @@ const mutationResolvers = {
             }
         },
 
-        deleteVehicle: async(
+        deleteVehicle: async (
             _: any,
             args: { id: string },
             context: GraphQLContext,
@@ -122,7 +127,7 @@ const mutationResolvers = {
                 console.error(error);
                 return { message: "Something Went Wrong" };
             }
-        }
+        },
     },
 };
 
