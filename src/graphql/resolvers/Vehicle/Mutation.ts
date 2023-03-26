@@ -23,6 +23,7 @@ const mutationResolvers = {
                         engine: vehicle.engine,
                         transmission: vehicle.transmission,
                         type: vehicle.type,
+                        images: vehicle.images,
                         registration_number: vehicle.registration_number,
                         availability: vehicle.availability,
                         views: vehicle.views,

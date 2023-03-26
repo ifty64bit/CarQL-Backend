@@ -127,6 +127,20 @@ const queryResolver = {
                 return null;
             }
         },
+        brands: async (
+            _: any,
+            args: any,
+            context: GraphQLContext,
+            info: any
+        ) => {
+            const { prisma } = context;
+            try {
+                return await prisma.brands.findMany();;
+            } catch (error) {
+                console.error(error);
+                return null;
+            }
+        },
     },
 };
 

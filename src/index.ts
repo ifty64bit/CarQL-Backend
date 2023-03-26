@@ -9,6 +9,7 @@ import typeDefs from "./graphql/typeDefs";
 import resolvers from "./graphql/resolvers";
 import { GraphQLContext } from "./util/types";
 import upload from "./util/multer";
+import { getServerSession } from "next-auth";
 
 dotenv.config();
 const corsOptions = {
@@ -41,6 +42,7 @@ try {
 
 app.post(
     "/photos/upload",
+    cors<cors.CorsRequest>(corsOptions),
     upload.array("photos", 12),
     function (req, res, next) {
         // req.files is array of `photos` files

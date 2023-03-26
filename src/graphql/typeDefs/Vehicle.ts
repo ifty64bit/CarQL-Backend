@@ -27,16 +27,13 @@ type MultipleVehicleResponse {
 union VehicleResponse = Vehicle | ErrorResponse
 
 type VehicleImage {
-    url:String
     name:String
     originalName:String
 }
 
 input VehicleImageInput {
-    url:String!
     name:String!
     originalName:String!
-    isPrimary:Boolean
 }
 
 type Comment {
@@ -71,6 +68,10 @@ type Vehicle {
     comments: [Comment]
 }
 
+type VehicleBrand {
+    name: String
+}
+
 input VehicleInput {
     brand: String!
     model: String!
@@ -95,6 +96,8 @@ type Query {
     filterdVehicles(brand: String, model:String, year: Int, color:String, price: Int, mileage: Int, transmission: String, engine: String, user: String): MultipleVehicleResponse
 
     vehicle(id: String): Vehicle
+
+    brands: [VehicleBrand]
 }
 
 type Mutation {
